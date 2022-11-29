@@ -6,7 +6,8 @@ library(tidyverse)
 # Note: The CSV file is stored on my local machine to speed load times
 #---------------------------------------------------------------------------#
 get_data <- function(num_records=-1) {
-  fname <- "~/Documents/info201/data/incarceration_trends.csv"
+  # I was having problems getting the data to load on my machine properly so I modified this function to get the data directly from github.
+  fname <- "https://raw.githubusercontent.com/vera-institute/incarceration-trends/master/incarceration_trends.csv"
   df <- read.csv(fname, nrows=num_records)
   return(df)
 }
@@ -143,6 +144,8 @@ get_basic_info <- function(df) {
   
   cat(t) 
 }
+
+
 
 # Main ----
 #----------------------------------------------------------------------------#

@@ -1,7 +1,7 @@
 ---
-title: "Your A4 Report Title (TODO: Revise title)"
-author: "Your Name"
-date: '2022-11-01'
+title: "Investigation on the Factors Contributing to Discrimination of Racial Minorities in the Jail/prison System"
+author: "Anne A. Clark"
+date: '2022-11-28'
 output: html_document
 ---
 
@@ -11,35 +11,53 @@ source("../source/analysis.R")
 ```
 
 ## Abstract 
-[TODO: Include a short abstract (about 50 words)]
-
-# Test (TODO: Remove before submission!!)
-```{r echo=FALSE}
-q1_string <- test_query1()
-num <- 5
-```
-As you know, this is a markdown report. The [R Markdown Cheatsheet](https://www.rstudio.com/wp-content/uploads/2015/02/rmarkdown-cheatsheet.pdf) is **useful!**
-
-* Here's a test of a dynamic variable. Say **"`r q1_string`!!!** 
-* Here's another test. A vector
-of numbers: `r test_query2(num)`.
-
-Recall that _{r echo=TRUE}_ can be used to display the code, 
-which is very useful when developing and debugging a report. Here's an example: 
-
-```{r echo=TRUE}
-num <- 5
-sum <- sum(test_query2(num))
-print(sum)
-```
+An analysis of Vera Institute data on Incarceration shows that jail population increased drastically from the late 1970's to mid to late 2000's, and that disproportionate treatment for people of color in the jailing system is extensive and occurs with the most severity in rural, homogeneous populations.    
 
 ## Introduction 
-[TODO]
+
+This dataset was obtained from the Vera Institute of Justice, a nonprofit organization that seeks to tackle issues in the American justice system.  The dataset provides information about jail and prison populations in every US county, breakdowns of the race/gender of these populations, and general population statistics from 1970-2018.  This report seeks to focus specifically on the racial biases in the jail system.  [People of color have been historically minoritized by being overpoliced and overrepresented in prison populations since the beginning of the United States due to social stereotypes, and fear of crime, however this rhetoric was utilized specifically after 1970, which began the period of mass incarceration.](https://www.vera.org/reimagining-prison-web-report/american-history-race-and-prison).  The questions that this report seeks to answer are:
+
+- How much are certain races disproportionately represented in the jail system
+- How has the jail population changed in the past few decades? How is this change reflected in different states?
+- To what extent does the diversity of a community correlate with a racially disproportionate jail population?
+- How does systemic racial bias in the jailing system vary geographically, for what reasons?
 
 ## Data Summary 
-[TODO]
+There were an average of of **`r prettyNum(round(pop_jail_prison),big.mark = ",")`** average people in jail or prison each day in 2015, equivalent of **`r pct_in_jail_prison`%** of the population.  This is **`r ratio`** times more than the percentage of people in jail in 1970, at only **`r pct_in_jail_prison_old`%**. **`r pct_in_jail_prison_white`%** of these inmates were white and **`r pct_in_jail_prison_of_color`%** were of color.
 
-[TODO ... other sections ... See Canvas for details]
+## Growth of the US Prison Population
 
-_All the very best with your work!_
+```{r echo=FALSE}
+plot_jail_pop_for_us()
+```
 
+This graph of the total jail population of the dataset shows how the period of mass incarceration directly affected the jail population.  Starting around the late 1970's, the beginning of an upward trend in jail population can be observed which continues to about the 2000's where it starts to level off.
+
+## Growth of the Prison Population By State
+
+```{r echo=FALSE, warning=FALSE, message=FALSE}
+plot_jail_pop_by_states(c("CA","IL", "ND","MT","NY"))
+```
+
+This chart shows how the total jail population increased across five seperate states.  These states were chosen because they represent a diversity in location, urbanicity, and political leanings.  The chart shows firstly, that all states were affected by this mass incarceration, but that the more rural states (North Dakota, Montana) tended to decline less than the more urban states (New York, Illinois) in the more recent years of the dataset.
+
+## Affects of demographics of a county on disproportionate jailings
+
+
+```{r echo=FALSE}
+plot_pct_disproportionately_black_in_jail_vs_w_to_b_ratio()
+```
+
+**Question: To what extent does the diversity of a community correlate with a racially disproportionate jail population?**
+
+This chart shows the distribution of different counties' white to black ratio (i.e how many white people there are for each black person in the county) as well as the counties' rate of disproportionately jailing black people as opposed to white people, equal to dividing the white to black ratio in jail by the white to black ratio of the entire county.  This chart shows a clear trend that counties with a higher white to black ratio tend to have more discrimination in their jailing systems. This is likely because as certain marginalized races become more of a minority, they become more oppressed as a group and more "othered" leading to further stereotyping and alienation.
+
+## State by state increases in non-white jail population
+
+```{r echo=FALSE }
+map_diff_in_black_jail_pop_by_state(2000,2018)
+```
+
+**Question: How does systemic racial bias in the jailing system vary geographically, for what reasons?**
+
+This map shows the difference in non-white jail population among all states from 2000-2018.  The specific year 2000 was chosen because it was around the time that the increase in jail population began to slow down.  We can see that states close to the center of the country tend to have the highest increase of their non-white jail population.  These are notably some of the most rural states, as well as the most white.  On the other hand, states such as New York, Illinois, and Oregon had the highest decrease in their non-white jail population, states that tend to be a lot more urban and diverse.  This map reinforces the previous idea that states with a more secluded homogeneous population tend to have more systemic bias in their jailing systems.
